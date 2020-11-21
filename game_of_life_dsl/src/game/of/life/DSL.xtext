@@ -1,0 +1,40 @@
+grammar game.of.life.DSL with org.eclipse.xtext.common.Terminals
+
+generate dSL "http://www.of.game/life/DSL"
+
+Game: decls += decl*
+	  grid = Grid
+	  rules = Rules;
+
+decl: {VariableDecl} pat=CustomPattern;
+
+
+Grid:'Grid'
+	 (marks += Mark* | fill = Fill);
+	  
+Mark: (Pattern | Point);
+
+Pattern: (name=Predefined | {VariableRef} custom=[CustomPattern]) loc=Point;
+
+Predefined: ('Block' | 'Beehive' | 'Loaf' | 'Boat' | 'Tub' | 'Blinker' | 'Toad' | 'Beacon' |
+	         'Pulsar'| 'PentaDecathlon' | 'Glider' | 'LWSS' | 'MWSS' | 'HWSS' | 'GosperGun' |
+	         'SimkinGun' | 'R-pentonimo' | 'Diehard' | 'Acorn' );
+
+CustomPattern: 'Pattern' name = ID '[' pointList += Point+ ']';
+
+Fill: 'fill' percent=INT;
+
+Point: '(' x=INT',' y=INT')';
+
+
+Rules: 'Rules'
+	   rules += (Rule)+;
+
+Rule: 'Any' state=State 'cell' 'with' op=BoolOp nCount=INT 'neighbours' result=Result;
+
+State: 'live' | 'dead';
+	   
+BoolOp: '>' | '<' | '>='| '<=';
+		
+Result: 'lives' | 'dies';
+
