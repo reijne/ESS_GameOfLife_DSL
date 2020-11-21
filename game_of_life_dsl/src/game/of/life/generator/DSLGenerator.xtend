@@ -18,7 +18,7 @@ class DSLGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val game = resource.allContents.head as Game;
-		println(game.decls.);
+		println(game);
 		fsa.generateFile('RulesOfLife.java', '''package GameOfLife;
 
 	import java.awt.Point;
@@ -48,18 +48,14 @@ class DSLGenerator extends AbstractGenerator {
 	}''')
 	}
 	
-	def static addDecls(Game game) '''
+	def static addDecls(Game game) '''"\n"
 		// Custom pattern declarations
-		«FOR decl: game.decls»
-		«decl.name»
+		«FOR d: game.decls AFTER "\n"»
+		Point[] «d.pat.name» = {«FOR p: d.pat.pointList SEPARATOR ", "» new Point(«p.x»,«p.y») «ENDFOR»};
 		«ENDFOR»
 	'''
 	
-	def static addMarkings(Game game) {
-		
-	}
+	def static addMarkings(Game game) ''''''
 	
-	def static addRules(Game game) {
-		
-	}
+	def static addRules(Game game) ''''''
 }

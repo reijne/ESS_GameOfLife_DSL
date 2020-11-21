@@ -2,14 +2,14 @@ grammar game.of.life.DSL with org.eclipse.xtext.common.Terminals
 
 generate dSL "http://www.of.game/life/DSL"
 
-Game: decls += decl*
+Game: decls += Decl*
 	  grid = Grid
 	  rules = Rules;
 
-decl: {VariableDecl} pat=CustomPattern;
+Decl: pat=CustomPattern;
 
 
-Grid:'Grid'
+Grid:{Grid} 'Grid'
 	 (marks += Mark* | fill = Fill);
 	  
 Mark: (Pattern | Point);
