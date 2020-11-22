@@ -18,21 +18,49 @@ class DSLGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val game = resource.allContents.head as Game;
-		println(game);
 		fsa.generateFile('RulesOfLife.java', '''package GameOfLife;
 
-	import java.awt.Point;
-	import java.util.ArrayList;''' 
+import java.awt.Point;
+import java.util.ArrayList;  
+import java.awt.Dimension; 
+public class RulesOfLife {
+	// Predefined patterns for the Game of Life
+	static final Point[] Block 			= { new Point(0,0) ,  new Point(0,1) ,  new Point(1,0) ,  new Point(1,1) };
+    static final Point[] Beehive 		= { new Point(1,0) ,  new Point(2,0) ,  new Point(0,1) ,  new Point(3,1) ,  new Point(1,2) ,  new Point(2,2) };
+    static final Point[] Loaf 			= { new Point(1,0) ,  new Point(2,0) ,  new Point(0,1) ,  new Point(3,1) ,  new Point(1,2) ,  new Point(3,2) ,  new Point(2,3) };
+    static final Point[] Boat 			= { new Point(0,0) ,  new Point(1,0) ,  new Point(0,1) ,  new Point(2,1) ,  new Point(1,2) };
+    static final Point[] Tub 			= { new Point(1,0) ,  new Point(0,1) ,  new Point(1,2) ,  new Point(2,1) };
+    static final Point[] Blinker 		= { new Point(0,0) ,  new Point(0,1) ,  new Point(0,2) };
+    static final Point[] Toad 			= { new Point(1,0) ,  new Point(2,0) ,  new Point(3,0) ,  new Point(0,1) ,  new Point(1,1) ,  new Point(2,1) };
+    static final Point[] Beacon 		= { new Point(0,0) ,  new Point(1,0) ,  new Point(0,1) ,  new Point(3,3) ,  new Point(2,3) ,  new Point(3,2) };
+    static final Point[] Pulsar 		= { new Point(2,0) ,  new Point(3,0) ,  new Point(4,0) ,  new Point(8,0) ,  new Point(9,0) ,  new Point(10,0) ,  new Point(2,5) ,  new Point(3,5) ,  new Point(4,5) ,  new Point(8,5) ,  new Point(9,5) ,  new Point(10,5) ,  new Point(2,7) ,  new Point(3,7) ,  new Point(4,7) ,  new Point(8,7) ,  new Point(9,7) ,  new Point(10,7) ,  new Point(2,12) ,  new Point(3,12) ,  new Point(4,12) ,  new Point(8,12) ,  new Point(9,12) ,  new Point(10,12) ,  new Point(0,2) ,  new Point(0,3) ,  new Point(0,4) ,  new Point(0,8) ,  new Point(0,9) ,  new Point(0,10) ,  new Point(5,2) ,  new Point(5,3) ,  new Point(5,4) ,  new Point(5,8) ,  new Point(5,9) ,  new Point(5,10) ,  new Point(7,2) ,  new Point(7,3) ,  new Point(7,4) ,  new Point(7,8) ,  new Point(7,9) ,  new Point(7,10) ,  new Point(12,2) ,  new Point(12,3) ,  new Point(12,4) ,  new Point(12,8) ,  new Point(12,9) ,  new Point(12,10) };
+    static final Point[] Pentadecathlon = { new Point(1,0) ,  new Point(1,1) ,  new Point(0,2) ,  new Point(2,2) ,  new Point(1,3) ,  new Point(1,4) ,  new Point(1,5) ,  new Point(1,6) ,  new Point(0,7) ,  new Point(2,7) ,  new Point(1,8) ,  new Point(1,9) };
+    static final Point[] Glider 		= { new Point(0,0) ,  new Point(2,0) ,  new Point(1,1) ,  new Point(2,1) ,  new Point(1,3) };
+    static final Point[] LWSS 			= { new Point(1,0) ,  new Point(2,0) ,  new Point(3,0) ,  new Point(4,0) ,  new Point(0,1) ,  new Point(4,1) ,  new Point(4,2) ,  new Point(3,3) ,  new Point(0,3) };
+    static final Point[] MWSS 			= { new Point(0,1) ,  new Point(2,0) ,  new Point(0,3) ,  new Point(1,4) ,  new Point(2,4) ,  new Point(3,4) ,  new Point(4,4) ,  new Point(5,4) ,  new Point(5,3) ,  new Point(5,2) ,  new Point(4,1) };
+    static final Point[] HWSS 			= { new Point(1,0) ,  new Point(2,0) ,  new Point(3,0) ,  new Point(4,0) ,  new Point(5,0) ,  new Point(6,0) ,  new Point(0,1) ,  new Point(6,1) ,  new Point(6,2) ,  new Point(5,3) ,  new Point(0,3) ,  new Point(2,4) ,  new Point(3,4) };
+    static final Point[] GosperGun 		= { new Point(24,0) ,  new Point(24,1) ,  new Point(22,1) ,  new Point(24,5) ,  new Point(24,6) ,  new Point(22,1) ,  new Point(22,5) ,  new Point(21,2) ,  new Point(21,3) ,  new Point(21,4) ,  new Point(20,2) ,  new Point(20,3) ,  new Point(20,4) ,  new Point(34,2) ,  new Point(34,3) ,  new Point(35,2) ,  new Point(35,3) ,  new Point(0,4) ,  new Point(0,5) ,  new Point(1,4) ,  new Point(1,5) ,  new Point(10,4) ,  new Point(10,5) ,  new Point(10,6) ,  new Point(11,3) ,  new Point(11,7) ,  new Point(12,2) ,  new Point(12,8) ,  new Point(13,2) ,  new Point(13,8) ,  new Point(14,5) ,  new Point(15,3) ,  new Point(15,7) ,  new Point(16,4) ,  new Point(16,5) ,  new Point(16,6) ,  new Point(17,5) };
+    static final Point[] SimkinGun 		= { new Point(0,0) ,  new Point(1,1) ,  new Point(0,1) ,  new Point(1,0) ,  new Point(7,0) ,  new Point(8,0) ,  new Point(7,1) ,  new Point(8,1) ,  new Point(4,3) ,  new Point(4,4) ,  new Point(5,3) ,  new Point(5,4) ,  new Point(20,17) ,  new Point(20,18) ,  new Point(21,10) ,  new Point(21,11) ,  new Point(21,12) ,  new Point(21,17) ,  new Point(21,19) ,  new Point(22,9) ,  new Point(22,12) ,  new Point(22,19) ,  new Point(23,9) ,  new Point(23,12) ,  new Point(23,19) ,  new Point(23,20) ,  new Point(25,9) ,  new Point(26,9) ,  new Point(26,13) ,  new Point(27,10) ,  new Point(27,12) ,  new Point(28,11) ,  new Point(31,11) ,  new Point(31,12) ,  new Point(32,11) ,  new Point(32,12) };
+    static final Point[] R_pentonimo 	= { new Point(1,0) ,  new Point(2,0) ,  new Point(0,1) ,  new Point(1,1) ,  new Point(1,2) };
+    static final Point[] Diehard 		= { new Point(0,1) ,  new Point(1,1) ,  new Point(1,2) ,  new Point(6,0) ,  new Point(6,2) ,  new Point(5,2) ,  new Point(7,2) };
+    static final Point[] Acorn 			= { new Point(0,2) ,  new Point(1,0) ,  new Point(1,2) ,  new Point(3,1) ,  new Point(4,2) ,  new Point(5,2) ,  new Point(6,2) };
+		
+		''' 
 	+ addDecls(game) 
-	+ addMarkings(game) 
+	+'''    private static boolean firstCall = true;
+	
+	''' 
 	+
-'''    public class RulesOfLife {
-		public static void computeSurvivors(boolean[][] gameBoard, ArrayList<Point> survivingCells) {
-        	// Iterate through the array, follow game of life rules
-       	 for (int i=1; i<gameBoard.length-1; i++) {
-            for (int j=1; j<gameBoard[0].length-1; j++) {
-                int surrounding = 0;
-                if (gameBoard[i-1][j-1]) { surrounding++; }
+'''	public static void computeSurvivors(boolean[][] gameBoard, ArrayList<Point> survivingCells) {
+		if (firstCall) {
+			addMarkings(survivingCells);
+			firstCall = false;
+		}
+   		// Iterate through the array, follow game of life rules
+		for (int i=1; i<gameBoard.length-1; i++) {
+        	for (int j=1; j<gameBoard[0].length-1; j++) {
+	        	int surrounding = 0;
+	            if (gameBoard[i-1][j-1]) { surrounding++; }
                 if (gameBoard[i-1][j])   { surrounding++; }
                 if (gameBoard[i-1][j+1]) { surrounding++; }
                 if (gameBoard[i][j-1])   { surrounding++; }
@@ -40,22 +68,58 @@ class DSLGenerator extends AbstractGenerator {
                 if (gameBoard[i+1][j-1]) { surrounding++; }
                 if (gameBoard[i+1][j])   { surrounding++; }
                 if (gameBoard[i+1][j+1]) { surrounding++; }
-                /* only code for surviving cells, so no rule if result is dead cell */
-                 /* rule B3 */''' 
+                
+                ''' 
                  + addRules(game) + '''
-        	}
-		}
-	}''')
+                 
+			}
+	    }
+ 	}
+ 	''' 
+ 	+ addMarkings(game) 
+ 	+
+'''    public static Dimension getGridSize() {
+«IF game.grid.size !== null»        return new Dimension(10*«game.grid.size.x», 10*«game.grid.size.y»);
+«ELSE»	    return new Dimension(10*80, 10*60);
+«ENDIF»
+    }
+}''')
 	}
 	
-	def static addDecls(Game game) '''"\n"
-		// Custom pattern declarations
-		«FOR d: game.decls AFTER "\n"»
-		Point[] «d.pat.name» = {«FOR p: d.pat.pointList SEPARATOR ", "» new Point(«p.x»,«p.y») «ENDFOR»};
-		«ENDFOR»
+	/* Add the custom pattern declarations, **Presented as one line to format generated code correctly */
+	def static addDecls(Game game) '''
+		    // Custom pattern declarations
+		«FOR d: game.decls SEPARATOR "\n" AFTER "\n"»    static final Point[] «d.pat.name» = {«FOR p: d.pat.pointList SEPARATOR ", "» new Point(«p.x»,«p.y») «ENDFOR»};«ENDFOR»
 	'''
 	
-	def static addMarkings(Game game) ''''''
+	def static addMarkings(Game game) '''
+			«IF game.grid.fill !== null»    // Fill with a set percentage
+			    randomlyFillBoard(«game.grid.fill.percent»);
+			«ELSE»
+				public static void addMarkings(ArrayList<Point> survivingCells) {
+			«FOR m: game.grid.marks» 
+				«IF m.poi !== null»	     survivingCells.add(new Point(«m.poi.x»-1, «m.poi.y»-1));
+				«ELSE»
+					«IF m.pat.name !== null»        for (Point p : «m.pat.name») {
+						        survivingCells.add(new Point(p.x+«m.pat.loc.x»-1, p.y+«m.pat.loc.y»-1));	
+					        }
+					«ELSE»        for (Point p : «m.pat.custom.name») {
+						        survivingCells.add(new Point(p.x+«m.pat.loc.x»-1, p.y+«m.pat.loc.y»-1));	
+					        }
+					«ENDIF»
+				«ENDIF»
+			«ENDFOR»
+			    }
+			«ENDIF»
+		'''
 	
-	def static addRules(Game game) ''''''
+	def static addRules(Game game) '''
+	                    /* only code for surfing cells, so no rule if result is dead cell */
+	    «FOR rule : game.rules.rules SEPARATOR "\n"»
+	    «IF rule.result == 'lives'»                if («IF rule.state == "dead"»!«ENDIF»gameBoard[i][j] && surrounding «rule.op» «rule.NCount») {
+                	survivingCells.add(new Point(i-1,j-1));
+                }
+	    «ENDIF»
+	    «ENDFOR»
+	'''
 }

@@ -9,15 +9,15 @@ Game: decls += Decl*
 Decl: pat=CustomPattern;
 
 
-Grid:{Grid} 'Grid'
+Grid:{Grid} 'Grid' size=Point?
 	 (marks += Mark* | fill = Fill);
 	  
-Mark: (Pattern | Point);
+Mark: (pat=Pattern | 'point' poi=Point);
 
-Pattern: (name=Predefined | {VariableRef} custom=[CustomPattern]) loc=Point;
+Pattern: (name=Predefined | custom=[CustomPattern]) loc=Point;
 
 Predefined: ('Block' | 'Beehive' | 'Loaf' | 'Boat' | 'Tub' | 'Blinker' | 'Toad' | 'Beacon' |
-	         'Pulsar'| 'PentaDecathlon' | 'Glider' | 'LWSS' | 'MWSS' | 'HWSS' | 'GosperGun' |
+	         'Pulsar'| 'Pentadecathlon' | 'Glider' | 'LWSS' | 'MWSS' | 'HWSS' | 'GosperGun' |
 	         'SimkinGun' | 'R-pentonimo' | 'Diehard' | 'Acorn' );
 
 CustomPattern: 'Pattern' name = ID '[' pointList += Point+ ']';
