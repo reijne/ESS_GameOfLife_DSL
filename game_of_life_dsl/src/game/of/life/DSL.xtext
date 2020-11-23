@@ -4,7 +4,7 @@ generate dSL "http://www.of.game/life/DSL"
 
 Game: decls += Decl*
 	  grid = Grid
-	  rules = Rules;
+	  rules = Rules?;
 
 Decl: pat=CustomPattern;
 
@@ -12,7 +12,7 @@ Decl: pat=CustomPattern;
 Grid:{Grid} 'Grid' size=Point?
 	 marks += Mark*;
 	  
-Mark: (pat=Pattern | 'point' poi=Point);
+Mark: (pat=Pattern | 'Point' poi=Point);
 
 Pattern: (name=Predefined | custom=[CustomPattern]) loc=Point;
 
@@ -31,7 +31,7 @@ Rule: 'Any' state=State 'cell' 'with' op=BoolOp nCount=INT 'neighbours' result=R
 
 State: 'live' | 'dead';
 	   
-BoolOp: '>' | '<' | '>='| '<=';
+BoolOp: '>' | '<' | '>='| '<=' | '==';
 		
 Result: 'lives' | 'dies';
 
