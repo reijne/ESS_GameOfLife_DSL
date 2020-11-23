@@ -57,7 +57,7 @@ class DSLValidator extends AbstractDSLValidator {
 	}
 	
 	@Check def RulesExist(Rules rules) {
-		if (rules.rules === null) {
+		if (rules.rules.size() == 0) {
 			{warning("Game has no rules, so the start state will remain", null)}
 		}
 	}
