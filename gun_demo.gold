@@ -1,0 +1,16 @@
+Pattern owo [(1,0)(0,1)(2,1)(1,2)
+	(9,0)(8,1)(10,1)(9,2)
+	(3,3)(3,4)(4,5)(5,4)(6,5)(7,4)(7,3)
+]
+
+Grid(80,80)
+	SimkinGun(10,10)
+	owo(40,4)
+	Pulsar(55,10)
+
+Rules
+	Any live cell with < 2 neighbours dies
+	Any live cell with == 2 neighbours lives
+	Any live cell with == 3 neighbours lives
+	Any live cell with > 3 neighbours dies
+	Any dead cell with == 3 neighbours lives
