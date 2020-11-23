@@ -10,7 +10,7 @@ Decl: pat=CustomPattern;
 
 
 Grid:{Grid} 'Grid' size=Point?
-	 (marks += Mark* | fill = Fill);
+	 (marks += Mark+ | fill = Fill);
 	  
 Mark: (pat=Pattern | 'point' poi=Point);
 
@@ -28,7 +28,7 @@ Point: '(' x=INT',' y=INT')';
 
 
 Rules: 'Rules'
-	   rules += (Rule)+;
+	   rules += Rule+;
 
 Rule: 'Any' state=State 'cell' 'with' op=BoolOp nCount=INT 'neighbours' result=Result;
 
