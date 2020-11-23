@@ -58,8 +58,7 @@ class DSLValidator extends AbstractDSLValidator {
 	
 	@Check def RulesExist(Rules rules) {
 		if (rules.rules.size() == 0) {
-			{warning("Game has no rules, so the start state will remain", null)}
+			{warning("Anarchy: Game has no rules, so everyone and everything will die", null)}
 		}
 	}
-	
 }
