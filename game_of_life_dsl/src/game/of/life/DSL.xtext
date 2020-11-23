@@ -25,7 +25,7 @@ CustomPattern: 'Pattern' name = ID '[' pointList += Point+ ']';
 Point: '(' x=INT',' y=INT')';
 
 Rules: {Rules} 'Rules'
-	   rules += Rule*;
+	   rules += Rule+;
 
 Rule: 'Any' state=State 'cell' 'with' op=BoolOp nCount=INT 'neighbours' result=Result;
 
