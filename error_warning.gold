@@ -1,0 +1,8 @@
+Grid(20,500)
+	Point(10,10)
+	Point(101,101)
+	Glider(50,10)
+	Glider
+	
+Rules
+	Any dead cell with < 0 neighbours dies
