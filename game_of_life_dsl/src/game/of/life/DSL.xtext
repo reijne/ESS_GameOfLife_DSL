@@ -10,7 +10,7 @@ Decl: pat=CustomPattern;
 
 
 Grid:{Grid} 'Grid' size=Point?
-	 (marks += Mark+ | fill = Fill);
+	 marks += Mark*;
 	  
 Mark: (pat=Pattern | 'point' poi=Point);
 
@@ -22,13 +22,10 @@ Predefined: ('Block' | 'Beehive' | 'Loaf' | 'Boat' | 'Tub' | 'Blinker' | 'Toad' 
 
 CustomPattern: 'Pattern' name = ID '[' pointList += Point+ ']';
 
-Fill: 'fill' percent=INT;
-
 Point: '(' x=INT',' y=INT')';
 
-
-Rules: 'Rules'
-	   rules += Rule+;
+Rules: {Rules} 'Rules'
+	   rules += Rule*;
 
 Rule: 'Any' state=State 'cell' 'with' op=BoolOp nCount=INT 'neighbours' result=Result;
 
